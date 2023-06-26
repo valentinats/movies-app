@@ -39,23 +39,6 @@ const clearInput = () => {
   cardTitleInputNode.value = "";
 };
 
-//расширение textarea.
-function setValue(cardTextarea) {
-  const textarea = document.getElementById("title");
-  textarea.style.height = 0;
-  textarea.value = cardTextarea;
-  textarea.style.height = textarea.scrollHeight + "px";
-}
-
-//получаем DOM-элемент.
-const textareaHeight = document.getElementById("title");
-
-//обработчики событий.
-textareaHeight.addEventListener("input", () => {
-  textareaHeight.style.height = 0;
-  textareaHeight.style.height = textareaHeight.scrollHeight + "px";
-});
-
 //сохраняем карточку. Операция добавления в массив cards.
 function addCard({ id, title }) {
   cards.unshift({
