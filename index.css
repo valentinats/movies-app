@@ -111,6 +111,7 @@ h1 {
 .card__elements {
   position: relative;
   display: flex;
+  align-items: center;
 }
 
 .card__title {
@@ -124,21 +125,44 @@ h1 {
   border: none;
   resize: none;
   outline: none;
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .card__check {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 19px;
-  height: 18px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.fake__checkbox {
+  position: relative;
+  display: inline-block;
   margin-right: 20px;
-  background-color: transparent;
+  min-width: 19px;
+  min-height: 19px;
+  vertical-align: sub;
+  opacity: 0.3;
   border: 1px solid #f3f6f9;
   border-radius: 100px;
-  opacity: 0.3;
   cursor: pointer;
+}
+
+.fake__checkbox::before {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  margin-top: 9px;
+  width: 19px;
+  height: 19px;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  border: 1px solid #f3f6f9;
+  border-radius: 100px;
+  background: #6532f8;
+  transition: 0.2s ease-in;
 }
 
 .card__item {
@@ -146,8 +170,8 @@ h1 {
   transition: opacity 0.3s ease-in-out;
 }
 
-.card__check:checked {
-  background-color: #6532f8;
+.card__check:checked + .fake__checkbox::before {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .checked {
@@ -291,8 +315,17 @@ h1 {
   .card__check {
     margin-right: 14px;
     margin-top: 5px;
+  }
+
+  .fake__checkbox {
+    min-width: 12px;
+    min-height: 12px;
+  }
+
+  .fake__checkbox::before {
+    margin-top: 5px;
     width: 12px;
-    height: 11px;
+    height: 12px;
   }
 
   .card__button {
