@@ -18,9 +18,9 @@ addCardBtn.addEventListener("click", function () {
 
 //получаем данные из поля ввода.
 function getCardFromUser() {
-  const title = cardTitleInputNode.value;
-
-  if (cardTitleInputNode.value.trim() === "") {
+  const title = cardTitleInputNode.value.trim();
+  if (!title) {
+    alert("Please, write the movies name");
     return;
   }
 
@@ -40,7 +40,12 @@ const clearInput = () => {
 };
 
 //сохраняем карточку. Операция добавления в массив cards.
-function addCard({ id, title }) {
+function addCard(card) {
+  if (!card) {
+    return;
+  }
+  const { id, title } = card;
+
   cards.unshift({
     id: id,
     title: title,
@@ -106,15 +111,16 @@ renderCards(cards, cardsListNode); //localStorage.
 //чекбокс карточки. -------------------------------
 
 //сохранение в local storage.
-function updateLocalStorage() { 
-  const checkboxes = document.querySelectorAll(".card__check"); 
-  checkboxes.forEach((checkbox, i) => { 
+function updateLocalStorage() {
+  const checkboxes = document.querySelectorAll(".card__check");
+  checkboxes.forEach((checkbox, i) => {
     const cardId = checkbox.id.split("-")[1];
-    if (cards.some(card => card.id === Number(cardId))) { // сохраняем запись только для существующих карточек
-      localStorage.setItem(`checkbox-${cardId}`, checkbox.checked); 
-    }
-  }); 
-} 
+    if (cards.some((card) => card.id === Number(cardId))) {
+      // сохраняем запись только для существующих карточек.
+      localStorage.setItem(`checkbox-${cardId}`, checkbox.checked);
+    } 
+  });
+}
 
 const doneHandler = (event) => {
   if (event.target.dataset.action === "done") {
@@ -133,14 +139,12 @@ const doneHandler = (event) => {
 
 cardsListNode.addEventListener("click", doneHandler);
 
-renderCards();
-
-function removeObject(cards) { 
-  const cardId = event.target.parentNode.parentNode.id; 
-  const cardIndex = cards.findIndex((card) => card.id === Number(cardId)); 
-  cards.splice(cardIndex, 1); 
-  removeItemFromLocalStorage(cardId); // удаляем запись из localStorage
-} 
+function removeObject(cards) {
+  const cardId = event.target.parentNode.parentNode.id;
+  const cardIndex = cards.findIndex((card) => card.id === Number(cardId));
+  cards.splice(cardIndex, 1);
+  removeItemFromLocalStorage(cardId); // удаляем запись из localStorage.
+}
 
 function removeItemFromLocalStorage(cardId) {
   localStorage.removeItem(`checkbox-${cardId}`);
