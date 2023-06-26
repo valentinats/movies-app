@@ -61,6 +61,7 @@ function renderCards() {
           <li id="${cards[i].id}" class="js-card-item card__item"${cssClass}>
             <div class="card__elements">
             <input id="checkbox-${cards[i].id}" class="card__check" type="checkbox" data-action="done"${cssClass}> 
+            <span class="fake__checkbox"></span>
             <label class="card__title" for="checkbox-${cards[i].id}">${cards[i].title}</label> 
             <div id="${cards[i].id}" class="js-card-button card__button"></div>
             </div>
